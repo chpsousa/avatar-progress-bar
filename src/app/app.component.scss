@@ -1,0 +1,59 @@
+mat-spinner {
+  $position: calc(50% - 50px);
+  $positionNegative: calc((50% - 50px) * -1);
+  position: relative;
+  top: $position;
+  left: $position;
+  transform: translate($positionNegative, $positionNegative);
+  z-index: 1;
+}
+
+.form {
+  padding: 16px 16px 52px 16px;
+}
+
+.btn-cancel { 
+  color: #757575;
+}
+
+.actions-buttons {
+  position: fixed;
+  right: 0px;
+  bottom: 0px;
+  background-color: #fff;
+  padding: 8px;
+  z-index: 1;
+  width: 100vw;
+}
+
+.image {
+  opacity: 1;
+  display: block;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+
+.avatar:hover .image {
+  opacity: 0.1;
+}
+
+.avatar:hover .middle {
+  opacity: 1;
+}
+
+.middle {
+  opacity: 0;
+  position: relative;
+  top: -60px;
+  left: 70px;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.text {
+  color: black;
+  font-weight: bold;
+  font-size: small;
+  padding: 8px 18px;
+}

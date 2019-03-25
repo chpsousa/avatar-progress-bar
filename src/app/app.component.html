@@ -1,0 +1,218 @@
+<div class="action-form">
+
+  <mat-toolbar color="accent">
+    <button mat-icon-button type="button" (click)="closeSidenav()" matTooltip="Fechar">
+      <mat-icon>clear</mat-icon>
+    </button>
+    <span class="fill-space"></span>
+    <button mat-icon-button type="button" *ngIf="identifier" matTooltip="Remover">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <ng-container *ngIf="user$ | async as user; else loading">
+    <form [formGroup]="form" (ngSubmit)="save()">
+
+      <mat-tab-group (selectedTabChange)="tabChange($event)">
+        <mat-tab label="Dados do usuário">
+          <div class="form">
+
+            <div fxLayout="row'" fxLayoutAlign="space-between stretch">
+
+              <div fxFlex="60" fxLayout="column" fxLayoutAlign="space-around stretch">
+                
+                <mat-form-field>
+                  <input matInput placeholder="Nome" formControlName="name" required />
+                  <mat-error *ngIf="form.get('name').hasError('required')">Informe o nome</mat-error>
+                </mat-form-field>
+
+                <mat-form-field>
+                  <input matInput placeholder="E-mail" formControlName="email" required />
+                  <mat-error *ngIf="form.get('email').hasError('required')">Informe o e-mail</mat-error>
+                  <mat-error *ngIf="form.get('email').hasError('email')">E-mail inválido</mat-error>
+                </mat-form-field>
+
+              </div>
+
+              <div fxFlex="30" class="avatar">
+                <img class="image" src="{{this.selectedFile ? this.selectedFile.file.src : 'https://picsum.photos/200/?random'}}" />
+                <div class="middle" (click)="imageInput.click()">
+                  <mat-icon>camera_alt</mat-icon>
+                  <div class="text">Alterar</div>
+                </div>
+                <mat-progress-bar *ngIf="this.selectedFile && this.selectedFile.pending" mode="indeterminate"></mat-progress-bar>
+              </div>
+              <input hidden #imageInput type="file" accept="image/*" (change)="processFile(imageInput)">
+
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="space-between stretch">
+
+              <mat-form-field fxFlex="45">
+                <input matInput placeholder="Nº do registro" formControlName="name" />
+              </mat-form-field>
+
+              <mat-radio-group fxFlex="45" fxFlexAlign="center">
+                <mat-radio-button value="1">Masc.</mat-radio-button>
+                &nbsp;
+                <mat-radio-button value="2">Fem.</mat-radio-button>
+              </mat-radio-group>
+
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="space-between stretch">
+
+              <mat-form-field fxFlex="45">
+                <input matInput placeholder="RG" formControlName="name" />
+              </mat-form-field>
+
+              <mat-form-field fxFlex="45">
+                <input matInput placeholder="CPF" formControlName="name" />
+              </mat-form-field>
+
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="space-between stretch">
+
+              <mat-form-field fxFlex="45">
+                <input matInput placeholder="Celular" formControlName="name" />
+              </mat-form-field>
+              
+              <mat-form-field fxFlex="45">
+                <input matInput placeholder="Telefone fixo" formControlName="name" />
+              </mat-form-field>
+
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="space-between stretch">
+
+              <mat-form-field fxFlex="45">
+                <input matInput [matDatepicker]="picker1" placeholder="Nascimento">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+              
+              <mat-form-field fxFlex="45">
+                <input matInput [matDatepicker]="picker2" placeholder="Admissão">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
+
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="space-between stretch">
+
+              <mat-form-field fxFlex="100">
+                <input matInput placeholder="Endereço" formControlName="name" />
+              </mat-form-field>
+
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="space-between stretch">
+
+              <mat-form-field fxFlex="45">
+                <input type="text" placeholder="Estado" matInput formControlName="name" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let option of options" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+              
+              <mat-form-field fxFlex="45">
+                <input type="text" placeholder="Cidade" matInput formControlName="name" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let option of options" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="space-between stretch">
+
+              <mat-form-field fxFlex="45">
+                <mat-select placeholder="Escolaridade">
+                  <mat-option *ngFor="let option of options" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              
+              <mat-checkbox fxFlex="45" fxFlexAlign="center">Completo</mat-checkbox>
+
+            </div>
+
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Dados de acesso">
+          <div class="form" fxLayout="column" fxLayoutAlign="space-between stretch">
+
+            <mat-form-field fxFlex="100">
+              <input matInput placeholder="Papel" formControlName="name" />
+            </mat-form-field>
+
+            <mat-form-field fxFlex="100">
+              <input matInput placeholder="Local" formControlName="name" />
+            </mat-form-field>
+
+            <h4>Ferramentas</h4>
+
+            <mat-selection-list>
+              <mat-divider></mat-divider>
+              <mat-list-option>Action</mat-list-option>
+              <mat-list-option>Audit</mat-list-option>
+              <mat-list-option>Docs</mat-list-option>
+              <mat-list-option>Forms</mat-list-option>
+              <mat-list-option>Indicators</mat-list-option>
+              <mat-list-option>Meeting</mat-list-option>
+              <mat-list-option>Metrology</mat-list-option>
+              <mat-list-option>Planner</mat-list-option>
+              <mat-list-option>Risks</mat-list-option>
+              <mat-list-option>Staff</mat-list-option>
+              <mat-list-option>Supply</mat-list-option>
+              <mat-list-option>Tasks</mat-list-option>
+              <mat-list-option>Tracker v1</mat-list-option>
+              <mat-list-option>Tracker v2</mat-list-option>
+              <mat-divider></mat-divider>
+            </mat-selection-list>
+
+            <h4>Config</h4>
+
+            <mat-selection-list>
+              <mat-divider></mat-divider>
+              <mat-list-option>Responsável pela conta</mat-list-option>
+              <mat-list-option>Sys Admin</mat-list-option>
+              <mat-list-option>Visualizar todas as empresas</mat-list-option>
+              <mat-divider></mat-divider>
+            </mat-selection-list>
+
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Campos adicionais">
+          <div class="form" fxLayout="column" fxLayoutAlign="space-between stretch">
+            
+            
+
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+
+      <div class="actions-buttons" fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button class="btn-cancel">CANCELAR</button>
+        <button mat-button color="primary">SALVAR</button>
+      </div>
+
+    </form>
+  </ng-container>
+
+  <ng-template #loading>
+    <div style="height: calc(100vh - 150px);">
+      <mat-spinner mode="indeterminate"></mat-spinner>
+    </div>
+  </ng-template>
+
+</div>
